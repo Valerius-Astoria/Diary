@@ -1,41 +1,34 @@
 # Diary — Development Plan
 
-## Planned work: `chore-baseline`
+## Completed: `chore-baseline` (merged 2026-08-10)
 
-**Status:** in progress
+### Features added
 
-### Functionality to add
-
-- Maven dependencies (JPA, Security, Thymeleaf, Web MVC, validation, PostgreSQL, H2, Lombok)
+- Maven dependencies for JPA, Security, Thymeleaf, validation, PostgreSQL, and H2 tests
 - Baseline application and test configuration
-- `.gitignore` updates for secrets
+- Secret-safe `.gitignore` entries
 
-### Files expected to change
+### Files added
+
+- `src/test/resources/application.properties`
+
+### Files modified
 
 - `pom.xml`
 - `src/main/resources/application.properties`
-- `src/test/resources/application.properties`
 - `.gitignore`
-
-### Files that must not change
-
-- `src/main/java/com/valerius/diary/DiaryApplication.java`
 
 ---
 
-## Planned work: `feat-auth`
+## Completed: `feat-auth` (merged 2026-08-10)
 
-**Status:** planned
+### Features added
 
-### Functionality to add
-
-- User entity and repository
-- Registration form with validation
-- Spring Security configuration (BCrypt, form login)
-- Login and registration pages
+- User entity and repository with BCrypt form login
+- Registration and login pages
 - Security integration tests
 
-### Files expected to change
+### Files added
 
 - `src/main/java/com/valerius/diary/model/User.java`
 - `src/main/java/com/valerius/diary/repository/UserRepository.java`
@@ -45,70 +38,83 @@
 - `src/main/java/com/valerius/diary/controller/HomeController.java`
 - `src/main/resources/templates/login.html`
 - `src/main/resources/templates/register.html`
+- `src/main/resources/templates/index.html`
+- `src/main/resources/static/css/app.css`
 - `src/test/java/com/valerius/diary/SecurityIntegrationTest.java`
 - `src/test/java/com/valerius/diary/RegistrationIntegrationTest.java`
 
 ---
 
-## Planned work: `feat-diary-crud`
+## Completed: `feat-diary-crud` (merged 2026-08-10)
 
-**Status:** planned
-
-### Functionality to add
+### Features added
 
 - DiaryEntry entity with author ownership
-- DiaryEntryService for CRUD with ownership checks
-- DiaryController and entry templates
+- CRUD service, controller, and templates
 - Ownership integration tests
 
-### Files expected to change
+### Files added
 
 - `src/main/java/com/valerius/diary/model/DiaryEntry.java`
 - `src/main/java/com/valerius/diary/repository/DiaryEntryRepository.java`
 - `src/main/java/com/valerius/diary/security/DiaryEntryForm.java`
 - `src/main/java/com/valerius/diary/service/DiaryEntryService.java`
-- `src/main/java/com/valerius/diary/controller/DiaryController.java`
-- `src/main/resources/templates/entries/*.html`
+- `src/main/resources/templates/entries/form.html`
+- `src/main/resources/templates/entries/view.html`
 - `src/test/java/com/valerius/diary/DiaryEntryIntegrationTest.java`
+
+### Files modified
+
+- `src/main/java/com/valerius/diary/controller/DiaryController.java`
+- `src/main/resources/templates/entries/list.html`
+- `src/main/resources/static/css/app.css`
 
 ---
 
-## Planned work: `feat-diary-search-ui`
+## Completed: `feat-diary-search-ui` (merged 2026-08-10)
 
-**Status:** planned
+### Features added
 
-### Functionality to add
+- Keyword search, date range filter, sorting, and pagination
+- Shared layout fragments and error page
+- Search service tests
 
-- Keyword search, date range filter, sorting, pagination
-- Base layout template and responsive CSS
-- Global error handling
+### Files added
 
-### Files expected to change
+- `src/main/java/com/valerius/diary/config/GlobalControllerAdvice.java`
+- `src/main/resources/templates/layout.html`
+- `src/main/resources/templates/error.html`
+- `src/test/java/com/valerius/diary/DiaryEntryServiceTest.java`
+
+### Files modified
 
 - `src/main/java/com/valerius/diary/service/DiaryEntryService.java`
 - `src/main/java/com/valerius/diary/repository/DiaryEntryRepository.java`
 - `src/main/java/com/valerius/diary/controller/DiaryController.java`
-- `src/main/java/com/valerius/diary/config/GlobalControllerAdvice.java`
-- `src/main/resources/templates/layout.html`
 - `src/main/resources/templates/entries/list.html`
+- `src/main/resources/templates/entries/form.html`
+- `src/main/resources/templates/entries/view.html`
 - `src/main/resources/static/css/app.css`
-- `src/main/resources/templates/error.html`
-- `src/test/java/com/valerius/diary/DiaryEntryServiceTest.java`
+- `src/test/java/com/valerius/diary/RegistrationIntegrationTest.java`
+- `src/test/java/com/valerius/diary/DiaryEntryIntegrationTest.java`
 
 ---
 
-## Planned work: `ops-deploy`
+## Completed: `ops-deploy` (merged 2026-08-10)
 
-**Status:** planned
+### Features added
 
-### Functionality to add
+- Docker image build for Render deployment
+- Render blueprint and environment variable template
 
-- Dockerfile and `.dockerignore`
-- Render blueprint and `.env.example`
-
-### Files expected to change
+### Files added
 
 - `Dockerfile`
 - `.dockerignore`
 - `render.yaml`
 - `.env.example`
+
+### Notes
+
+- Local Neon credentials belong in gitignored `application-local.properties`
+- Production credentials are set on Render via `SPRING_DATASOURCE_*`

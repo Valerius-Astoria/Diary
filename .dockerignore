@@ -1,0 +1,10 @@
+target/
+.idea/
+.vscode/
+.git/
+.cursor/
+src/main/resources/application-local.properties
+.env
+.env.*
+!.env.example
+**/*.iml
