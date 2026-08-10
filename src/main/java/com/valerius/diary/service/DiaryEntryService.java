@@ -40,7 +40,7 @@ public class DiaryEntryService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "From date must be on or before to date");
         }
 
-        String normalizedKeyword = StringUtils.hasText(keyword) ? keyword.trim() : null;
+        String normalizedKeyword = StringUtils.hasText(keyword) ? keyword.trim() : "";
         return diaryEntryRepository.searchForAuthor(author, normalizedKeyword, fromDate, toDate, pageable);
     }
 

@@ -21,7 +21,7 @@ public interface DiaryEntryRepository extends JpaRepository<DiaryEntry, Long> {
     @Query("""
             SELECT e FROM DiaryEntry e
             WHERE e.author = :author
-              AND (:keyword IS NULL
+              AND (:keyword = ''
                    OR LOWER(e.title) LIKE LOWER(CONCAT('%', :keyword, '%'))
                    OR LOWER(e.content) LIKE LOWER(CONCAT('%', :keyword, '%')))
               AND (:fromDate IS NULL OR e.entryDate >= :fromDate)
