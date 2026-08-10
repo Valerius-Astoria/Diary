@@ -1,21 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${entry.title + ' — Diary'}">Entry — Diary</title>
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-</head>
+<head th:replace="~{layout :: head(${entry.title + ' — Diary'})}"></head>
 <body>
-<header class="site-header">
-    <div class="container header-inner">
-        <a class="brand" th:href="@{/entries}">Diary</a>
-        <nav class="nav">
-            <a th:href="@{/entries}">Entries</a>
-            <a th:href="@{/entries/{id}/edit(id=${entry.id})}">Edit</a>
-        </nav>
-    </div>
-</header>
+<header th:replace="~{layout :: header}"></header>
 
 <main class="container narrow">
     <article class="entry-detail">

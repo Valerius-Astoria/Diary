@@ -1,6 +1,7 @@
 package com.valerius.diary;
 
 import com.valerius.diary.model.User;
+import com.valerius.diary.repository.DiaryEntryRepository;
 import com.valerius.diary.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,10 +29,14 @@ class RegistrationIntegrationTest {
     private UserRepository userRepository;
 
     @Autowired
+    private DiaryEntryRepository diaryEntryRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     void setUp() {
+        diaryEntryRepository.deleteAll();
         userRepository.deleteAll();
     }
 

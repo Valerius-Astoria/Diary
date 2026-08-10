@@ -11,7 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDate;
 
 /**
  * Diary entry operations with author-scoped access control.
@@ -28,8 +31,17 @@ public class DiaryEntryService {
     }
 
     @Transactional(readOnly = true)
-    public Page<DiaryEntry> listForAuthor(User author, Pageable pageable) {
-        return diaryEntryRepository.findByAuthor(author, pageable);
+    public Page<DiaryEntry> search(User author,
+                                   String keyword,
+                                   LocalDate fromDate,
+                                   LocalDate toDate,
+                                   Pageable pageable) {
+        if (fromDate != null && toDate != null && fromDate.isAfter(toDate)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "From date must be on or before to date");
+        }
+
+        String normalizedKeyword = StringUtils.hasText(keyword) ? keyword.trim() : null;
+        return diaryEntryRepository.searchForAuthor(author, normalizedKeyword, fromDate, toDate, pageable);
     }
 
     @Transactional(readOnly = true)

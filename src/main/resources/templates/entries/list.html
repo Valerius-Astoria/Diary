@@ -1,26 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entries — Diary</title>
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Entries — Diary')}"></head>
 <body>
-<header class="site-header">
-    <div class="container header-inner">
-        <a class="brand" th:href="@{/entries}">Diary</a>
-        <nav class="nav">
-            <a th:href="@{/entries}">Entries</a>
-            <a class="button primary small" th:href="@{/entries/new}">New entry</a>
-            <form th:action="@{/logout}" method="post" class="inline-form">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                <button type="submit" class="button secondary small">Sign out</button>
-            </form>
-        </nav>
-    </div>
-</header>
+<header th:replace="~{layout :: header}"></header>
 
 <main class="container">
     <div class="page-header">
@@ -28,8 +10,43 @@
         <a class="button primary" th:href="@{/entries/new}">Write new entry</a>
     </div>
 
+    <form class="filter-form" th:action="@{/entries}" method="get">
+        <div class="filter-grid">
+            <div class="field">
+                <label for="q">Search</label>
+                <input id="q" name="q" type="search" th:value="${q}" placeholder="Title or content">
+            </div>
+            <div class="field">
+                <label for="fromDate">From</label>
+                <input id="fromDate" name="fromDate" type="date" th:value="${fromDate}">
+            </div>
+            <div class="field">
+                <label for="toDate">To</label>
+                <input id="toDate" name="toDate" type="date" th:value="${toDate}">
+            </div>
+            <div class="field">
+                <label for="sort">Sort by</label>
+                <select id="sort" name="sort">
+                    <option value="entryDate,desc" th:selected="${sort == 'entryDate,desc'}">Entry date (newest)</option>
+                    <option value="entryDate,asc" th:selected="${sort == 'entryDate,asc'}">Entry date (oldest)</option>
+                    <option value="updatedAt,desc" th:selected="${sort == 'updatedAt,desc'}">Last modified (newest)</option>
+                    <option value="updatedAt,asc" th:selected="${sort == 'updatedAt,asc'}">Last modified (oldest)</option>
+                </select>
+            </div>
+        </div>
+        <div class="actions">
+            <button type="submit" class="button primary">Apply filters</button>
+            <a class="button secondary" th:href="@{/entries}">Clear</a>
+        </div>
+    </form>
+
     <section th:if="${page.empty}" class="empty-state">
-        <p>No entries yet. Start writing your first diary entry.</p>
+        <p th:if="${q != null or fromDate != null or toDate != null}">
+            No entries match your filters. Try broadening your search.
+        </p>
+        <p th:unless="${q != null or fromDate != null or toDate != null}">
+            No entries yet. Start writing your first diary entry.
+        </p>
         <a class="button primary" th:href="@{/entries/new}">Create entry</a>
     </section>
 
@@ -43,6 +60,20 @@
             <p class="meta">Last updated <span th:text="${#temporals.format(entry.updatedAt, 'MMM d, yyyy HH:mm')}"></span></p>
         </article>
     </section>
+
+    <nav class="pagination" th:if="${page.totalPages > 1}">
+        <a class="button secondary small"
+           th:classappend="${page.first} ? ' disabled' : ''"
+           th:href="@{/entries(q=${q}, fromDate=${fromDate}, toDate=${toDate}, sort=${sort}, page=${page.number - 1})}"
+           th:attr="aria-disabled=${page.first}">Previous</a>
+        <span class="pagination-status">
+            Page <span th:text="${page.number + 1}">1</span> of <span th:text="${page.totalPages}">1</span>
+        </span>
+        <a class="button secondary small"
+           th:classappend="${page.last} ? ' disabled' : ''"
+           th:href="@{/entries(q=${q}, fromDate=${fromDate}, toDate=${toDate}, sort=${sort}, page=${page.number + 1})}"
+           th:attr="aria-disabled=${page.last}">Next</a>
+    </nav>
 </main>
 </body>
 </html>

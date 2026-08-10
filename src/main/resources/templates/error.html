@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Error — Diary')}"></head>
+<body>
+<main class="container narrow">
+    <section class="error-panel">
+        <h1 th:text="${status}">Error</h1>
+        <p th:text="${message}">Something went wrong.</p>
+        <div class="actions">
+            <a class="button primary" th:href="@{/entries}">Back to diary</a>
+            <a class="button secondary" th:href="@{/}">Home</a>
+        </div>
+    </section>
+</main>
+</body>
+</html>
