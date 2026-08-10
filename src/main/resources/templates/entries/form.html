@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${entryId != null} ? 'Edit entry — Diary' : 'New entry — Diary'">Entry — Diary</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header class="site-header">
+    <div class="container header-inner">
+        <a class="brand" th:href="@{/entries}">Diary</a>
+        <nav class="nav">
+            <a th:href="@{/entries}">Back to entries</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container narrow">
+    <h1 th:text="${entryId != null} ? 'Edit entry' : 'New entry'">New entry</h1>
+
+    <form th:action="${entryId != null} ? @{/entries/{id}(id=${entryId})} : @{/entries}"
+          th:object="${entryForm}"
+          method="post"
+          class="form">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+        <div class="field">
+            <label for="title">Title</label>
+            <input id="title" th:field="*{title}" type="text" maxlength="200">
+            <p class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+        </div>
+
+        <div class="field">
+            <label for="entryDate">Date</label>
+            <input id="entryDate" th:field="*{entryDate}" type="date">
+            <p class="error" th:if="${#fields.hasErrors('entryDate')}" th:errors="*{entryDate}"></p>
+        </div>
+
+        <div class="field">
+            <label for="content">Content</label>
+            <textarea id="content" th:field="*{content}" rows="12" maxlength="10000"></textarea>
+            <p class="error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
+        </div>
+
+        <div class="actions">
+            <button type="submit" class="button primary">Save entry</button>
+            <a class="button secondary" th:href="@{/entries}">Cancel</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>
