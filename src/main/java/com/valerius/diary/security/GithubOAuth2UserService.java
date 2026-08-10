@@ -1,8 +1,9 @@
 package com.valerius.diary.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -13,6 +14,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientResponseException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +26,9 @@ import java.util.Optional;
  */
 @Service
 public class GithubOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+
+    private static final Logger log = LoggerFactory.getLogger(GithubOAuth2UserService.class);
+    private static final String USER_AGENT = "Diary-Spring-Boot-OAuth";
 
     private static final ParameterizedTypeReference<List<Map<String, Object>>> EMAIL_LIST_TYPE =
             new ParameterizedTypeReference<>() {};
@@ -48,12 +53,28 @@ public class GithubOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     private Optional<String> resolveVerifiedEmail(String accessToken) {
-        List<Map<String, Object>> emails = restClient.get()
-                .uri("https://api.github.com/user/emails")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .body(EMAIL_LIST_TYPE);
+        List<Map<String, Object>> emails;
+        try {
+            emails = restClient.get()
+                    .uri("https://api.github.com/user/emails")
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                    .header(HttpHeaders.USER_AGENT, USER_AGENT)
+                    .header(HttpHeaders.ACCEPT, "application/vnd.github+json")
+                    .retrieve()
+                    .body(EMAIL_LIST_TYPE);
+        } catch (RestClientResponseException ex) {
+            log.warn("GitHub email lookup failed with status {}", ex.getStatusCode().value());
+            throw new OAuth2AuthenticationException(
+                    new OAuth2Error("email_lookup_failed"),
+                    "Unable to load GitHub email addresses",
+                    ex);
+        } catch (RuntimeException ex) {
+            log.warn("GitHub email lookup failed: {}", ex.getMessage());
+            throw new OAuth2AuthenticationException(
+                    new OAuth2Error("email_lookup_failed"),
+                    "Unable to load GitHub email addresses",
+                    ex);
+        }
 
         if (emails == null || emails.isEmpty()) {
             return Optional.empty();
