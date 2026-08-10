@@ -6,11 +6,16 @@
 
 <main class="container">
     <div class="page-header">
-        <h1>Your diary</h1>
+        <div class="page-header-copy">
+            <span class="section-label">Journal</span>
+            <h1>Your diary</h1>
+            <p class="lead">Browse, search, and revisit the moments you've captured.</p>
+        </div>
         <a class="button primary" th:href="@{/entries/new}">Write new entry</a>
     </div>
 
     <form class="filter-form" th:action="@{/entries}" method="get">
+        <span class="section-label">Find an entry</span>
         <div class="filter-grid">
             <div class="field">
                 <label for="q">Search</label>
@@ -34,7 +39,7 @@
                 </select>
             </div>
         </div>
-        <div class="actions">
+        <div class="actions actions-spaced">
             <button type="submit" class="button primary">Apply filters</button>
             <a class="button secondary" th:href="@{/entries}">Clear</a>
         </div>
@@ -47,16 +52,18 @@
         <p th:unless="${q != null or fromDate != null or toDate != null}">
             No entries yet. Start writing your first diary entry.
         </p>
-        <a class="button primary" th:href="@{/entries/new}">Create entry</a>
+        <div class="actions actions-center actions-spaced">
+            <a class="button primary" th:href="@{/entries/new}">Create entry</a>
+        </div>
     </section>
 
     <section th:unless="${page.empty}" class="entry-list">
         <article class="entry-card" th:each="entry : ${page.content}">
             <div class="entry-card-header">
                 <h2><a th:href="@{/entries/{id}(id=${entry.id})}" th:text="${entry.title}">Title</a></h2>
-                <time th:text="${#temporals.format(entry.entryDate, 'MMM d, yyyy')}">Date</time>
+                <time class="date-badge" th:text="${#temporals.format(entry.entryDate, 'MMM d, yyyy')}">Date</time>
             </div>
-            <p class="entry-preview" th:text="${#strings.abbreviate(entry.content, 180)}">Preview</p>
+            <p class="entry-preview" th:text="${entry.content}">Preview</p>
             <p class="meta">Last updated <span th:text="${#temporals.format(entry.updatedAt, 'MMM d, yyyy HH:mm')}"></span></p>
         </article>
     </section>

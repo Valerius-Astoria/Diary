@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diary</title>
-    <link rel="stylesheet" th:href="@{/css/app.css}">
-</head>
+<head th:replace="~{layout :: head('Diary — Your private journal')}"></head>
 <body>
-<main class="container narrow">
-    <h1>Your private diary</h1>
-    <p class="lead">Capture thoughts, reflect on your day, and revisit memories in a secure personal space.</p>
-    <div class="actions">
-        <a class="button primary" th:href="@{/login}">Sign in</a>
-        <a class="button secondary" th:href="@{/register}">Create account</a>
-    </div>
+<header th:replace="~{layout :: header}"></header>
+
+<main class="hero">
+    <section class="hero-card">
+        <span class="hero-eyebrow">Personal &amp; private</span>
+        <h1 class="hero-title">Your private diary</h1>
+        <p class="hero-lead">Capture thoughts, reflect on your day, and revisit memories in a secure space that feels like a well-worn journal.</p>
+        <div class="actions actions-center actions-spaced">
+            <a class="button primary" th:href="@{/login}">Sign in</a>
+            <a class="button secondary" th:href="@{/register}">Create account</a>
+        </div>
+        <p class="hero-quote">“Fill your paper with the breathings of your heart.”</p>
+    </section>
 </main>
 </body>
 </html>

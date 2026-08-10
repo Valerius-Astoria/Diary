@@ -5,17 +5,25 @@
 <header th:replace="~{layout :: header}"></header>
 
 <main class="container narrow">
-    <h1 th:text="${entryId != null} ? 'Edit entry' : 'New entry'">New entry</h1>
+    <div class="page-header">
+        <div class="page-header-copy">
+            <span class="section-label" th:text="${entryId != null} ? 'Editing' : 'Writing'">Writing</span>
+            <h1 th:text="${entryId != null} ? 'Edit entry' : 'New entry'">New entry</h1>
+            <p class="lead" th:if="${entryId == null}">Give today's thoughts a title and a place to live.</p>
+            <p class="lead" th:if="${entryId != null}">Refine the words that matter to you.</p>
+        </div>
+    </div>
 
     <form th:action="${entryId != null} ? @{/entries/{id}(id=${entryId})} : @{/entries}"
           th:object="${entryForm}"
           method="post"
-          class="form">
+          class="form writing-panel">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
         <div class="field">
             <label for="title">Title</label>
-            <input id="title" th:field="*{title}" type="text" maxlength="200">
+            <input id="title" th:field="*{title}" type="text" maxlength="200" placeholder="Morning reflections">
+            <p class="field-hint">A short headline to help you find this entry later.</p>
             <p class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
         </div>
 
@@ -27,7 +35,7 @@
 
         <div class="field">
             <label for="content">Content</label>
-            <textarea id="content" th:field="*{content}" rows="12" maxlength="10000"></textarea>
+            <textarea id="content" th:field="*{content}" rows="14" maxlength="10000" placeholder="Write freely..."></textarea>
             <p class="error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
         </div>
 

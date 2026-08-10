@@ -7,18 +7,18 @@
 <main class="container narrow">
     <article class="entry-detail">
         <header class="entry-detail-header">
+            <span class="section-label">Entry</span>
             <h1 th:text="${entry.title}">Title</h1>
-            <p class="meta">
-                Entry date:
+            <div class="meta-row meta">
                 <time th:text="${#temporals.format(entry.entryDate, 'MMMM d, yyyy')}">Date</time>
-            </p>
-            <p class="meta">
-                Created <span th:text="${#temporals.format(entry.createdAt, 'MMM d, yyyy HH:mm')}"></span>
-                · Updated <span th:text="${#temporals.format(entry.updatedAt, 'MMM d, yyyy HH:mm')}"></span>
-            </p>
+                <span class="meta-divider">·</span>
+                <span>Created <span th:text="${#temporals.format(entry.createdAt, 'MMM d, yyyy HH:mm')}"></span></span>
+                <span class="meta-divider">·</span>
+                <span>Updated <span th:text="${#temporals.format(entry.updatedAt, 'MMM d, yyyy HH:mm')}"></span></span>
+            </div>
         </header>
 
-        <div class="entry-content" th:text="${entry.content}">Content</div>
+        <div class="entry-content writing-panel" th:text="${entry.content}">Content</div>
 
         <div class="actions">
             <a class="button primary" th:href="@{/entries/{id}/edit(id=${entry.id})}">Edit</a>

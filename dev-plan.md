@@ -100,7 +100,32 @@
 
 ---
 
-## Completed: `ops-deploy` (merged 2026-08-10)
+## Planned work: `feat-ui-beautify`
+
+**Status:** in progress
+
+### Functionality to add
+
+- Warm journal theme: paper tones, serif headings, polished cards and forms
+- Shared layout fragments for auth/landing pages
+- Consistent typography via Google Fonts
+
+### Files expected to change
+
+- `src/main/resources/static/css/app.css`
+- `src/main/resources/templates/layout.html`
+- `src/main/resources/templates/index.html`
+- `src/main/resources/templates/login.html`
+- `src/main/resources/templates/register.html`
+- `src/main/resources/templates/error.html`
+- `src/main/resources/templates/entries/list.html`
+- `src/main/resources/templates/entries/form.html`
+- `src/main/resources/templates/entries/view.html`
+
+### Files that must not change
+
+- Java controllers, services, security config, tests
+
 
 ### Features added
 

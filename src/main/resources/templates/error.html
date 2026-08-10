@@ -2,11 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout :: head('Error — Diary')}"></head>
 <body>
-<main class="container narrow">
-    <section class="error-panel">
+<header th:replace="~{layout :: header}"></header>
+
+<main class="auth-shell">
+    <section class="error-panel auth-card">
         <h1 th:text="${status}">Error</h1>
         <p th:text="${message}">Something went wrong.</p>
-        <div class="actions">
+        <div class="actions actions-center actions-spaced">
             <a class="button primary" th:href="@{/entries}">Back to diary</a>
             <a class="button secondary" th:href="@{/}">Home</a>
         </div>
