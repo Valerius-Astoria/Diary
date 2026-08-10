@@ -140,3 +140,81 @@
 - `src/main/resources/templates/entries/list.html`
 - `src/main/resources/templates/entries/form.html`
 - `src/main/resources/templates/entries/view.html`
+
+---
+
+## Completed: `feat-neon-local` (2026-08-10)
+
+### Features added
+
+- Gitignored local Neon PostgreSQL configuration for `./mvnw spring-boot:run`
+- Replaced prior H2 local override
+
+### Files added (gitignored)
+
+- `src/main/resources/application-local.properties`
+
+### Notes
+
+- Neon credentials stay out of git; rotate password if shared publicly
+- Tests continue to use H2 via `src/test/resources/application.properties`
+
+---
+
+## Completed: `feat-github-oauth` (merged 2026-08-10)
+
+### Features added
+
+- GitHub OAuth2 login with verified email resolution and local user linking
+- Optional "Continue with GitHub" on login/register when credentials are configured
+- OAuth success/failure handlers and security integration test coverage
+
+### Files added
+
+- `src/main/java/com/valerius/diary/config/OAuthModelAdvice.java`
+- `src/main/java/com/valerius/diary/security/GithubOAuth2UserService.java`
+- `src/main/java/com/valerius/diary/security/OAuth2LoginFailureHandler.java`
+- `src/main/java/com/valerius/diary/security/OAuth2LoginSuccessHandler.java`
+- `src/main/java/com/valerius/diary/security/OAuthAccountService.java`
+- `src/main/java/com/valerius/diary/security/OAuthUiProperties.java`
+- `src/main/java/com/valerius/diary/security/PasswordEncoderConfig.java`
+
+### Files modified
+
+- `pom.xml`
+- `src/main/java/com/valerius/diary/security/SecurityConfig.java`
+- `src/main/resources/application.properties`
+- `src/main/resources/static/css/app.css`
+- `src/main/resources/templates/login.html`
+- `src/main/resources/templates/register.html`
+- `src/test/java/com/valerius/diary/SecurityIntegrationTest.java`
+- `src/test/resources/application.properties`
+
+### GitHub OAuth URLs
+
+| Environment | Homepage | Callback |
+|-------------|----------|----------|
+| Local | `http://localhost:8080` | `http://localhost:8080/login/oauth2/code/github` |
+| Render | `https://diary.onrender.com` | `https://diary.onrender.com/login/oauth2/code/github` |
+
+Entry point: `/oauth2/authorization/github`
+
+---
+
+## Completed: `ops-render-oauth` (merged 2026-08-10)
+
+### Features added
+
+- Render blueprint GitHub OAuth environment variables
+- Expanded `.env.example` with OAuth and callback URL documentation
+- Gitignored `.env` template pre-filled for Render import
+
+### Files modified
+
+- `render.yaml`
+- `.env.example`
+- `dev-plan.md`
+
+### Files added (gitignored)
+
+- `.env`
