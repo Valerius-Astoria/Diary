@@ -32,6 +32,9 @@ build/
 ### VS Code ###
 .vscode/
 
+### Cursor (local IDE config) ###
+.cursor/
+
 ### Secrets and local config ###
 src/main/resources/application-local.properties
 .env
