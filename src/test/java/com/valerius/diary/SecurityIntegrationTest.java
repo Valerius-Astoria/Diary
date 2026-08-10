@@ -42,4 +42,10 @@ class SecurityIntegrationTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/entries"));
     }
+
+    @Test
+    void githubAuthorizationEndpointRedirectsWhenConfigured() throws Exception {
+        mockMvc.perform(get("/oauth2/authorization/github"))
+                .andExpect(status().is3xxRedirection());
+    }
 }

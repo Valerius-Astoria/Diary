@@ -12,6 +12,12 @@
         <p class="notice success" th:if="${param.registered}">Account created. You can sign in now.</p>
         <p class="notice success" th:if="${param.loggedOut}">You have been signed out.</p>
         <p class="notice error" th:if="${param.error}">Invalid email or password.</p>
+        <p class="notice error" th:if="${param.oauthError}">GitHub sign-in failed. Try again or use email instead.</p>
+
+        <div th:if="${githubEnabled}" class="oauth-section">
+            <a class="button oauth-github button-block" th:href="@{/oauth2/authorization/github}">Continue with GitHub</a>
+            <p class="oauth-divider"><span>or sign in with email</span></p>
+        </div>
 
         <form th:action="@{/login}" method="post" class="form form-plain">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>

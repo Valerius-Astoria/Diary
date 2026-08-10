@@ -572,6 +572,38 @@ a:hover {
     width: 100%;
 }
 
+.oauth-section {
+    margin-bottom: var(--space-3);
+}
+
+.oauth-divider {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: var(--space-3) 0 0;
+    color: var(--text-soft);
+    font-size: 0.875rem;
+}
+
+.oauth-divider::before,
+.oauth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.button.oauth-github {
+    background: #24292f;
+    color: #fff;
+    box-shadow: var(--shadow-soft);
+}
+
+.button.oauth-github:hover {
+    background: #1b1f23;
+    color: #fff;
+}
+
 .form-plain {
     box-shadow: none;
     padding: 0;
