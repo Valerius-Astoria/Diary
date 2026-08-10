@@ -100,32 +100,7 @@
 
 ---
 
-## Planned work: `feat-ui-beautify`
-
-**Status:** in progress
-
-### Functionality to add
-
-- Warm journal theme: paper tones, serif headings, polished cards and forms
-- Shared layout fragments for auth/landing pages
-- Consistent typography via Google Fonts
-
-### Files expected to change
-
-- `src/main/resources/static/css/app.css`
-- `src/main/resources/templates/layout.html`
-- `src/main/resources/templates/index.html`
-- `src/main/resources/templates/login.html`
-- `src/main/resources/templates/register.html`
-- `src/main/resources/templates/error.html`
-- `src/main/resources/templates/entries/list.html`
-- `src/main/resources/templates/entries/form.html`
-- `src/main/resources/templates/entries/view.html`
-
-### Files that must not change
-
-- Java controllers, services, security config, tests
-
+## Completed: `ops-deploy` (merged 2026-08-10)
 
 ### Features added
 
@@ -143,3 +118,25 @@
 
 - Local Neon credentials belong in gitignored `application-local.properties`
 - Production credentials are set on Render via `SPRING_DATASOURCE_*`
+
+---
+
+## Completed: `feat-ui-beautify` (merged 2026-08-10)
+
+### Features added
+
+- Warm journal theme with Lora/Source Sans 3 typography
+- Unified layout header across all pages
+- Polished entry cards, filter panel, auth shell, and hero landing
+
+### Files modified
+
+- `src/main/resources/static/css/app.css`
+- `src/main/resources/templates/layout.html`
+- `src/main/resources/templates/index.html`
+- `src/main/resources/templates/login.html`
+- `src/main/resources/templates/register.html`
+- `src/main/resources/templates/error.html`
+- `src/main/resources/templates/entries/list.html`
+- `src/main/resources/templates/entries/form.html`
+- `src/main/resources/templates/entries/view.html`
